@@ -18,7 +18,7 @@ jobs:
     - name: Secrets Scan (GitGuardian)
       uses: GitGuardian/ggshield-action@v1
       with:
-        args: scan repo
+        args: secret scan repo
 
     # Step 3: Set up Python
     - name: Set up Python
