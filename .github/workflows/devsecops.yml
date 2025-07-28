@@ -82,6 +82,8 @@ jobs:
          cd /home/contact/my-devsecops-app
          git pull origin main
          sudo docker build -t devsecops-app .
+         sudo docker stop devsecops-app || true
+         sudo docker rm devsecops-app || true
          sudo docker run -d --name devsecops-app -p 5002:8080 devsecops-app
 
 
