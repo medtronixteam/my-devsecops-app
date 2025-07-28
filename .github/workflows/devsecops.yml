@@ -91,4 +91,4 @@ jobs:
     - name: OWASP ZAP DAST Scan
       uses: zaproxy/action-full-scan@v0.7.0
       with:
-        target: 'https://<YOUR_CLOUD_RUN_URL>'
+        target: 'https://v-care-hospital-services.ai3dscanning.com/'
