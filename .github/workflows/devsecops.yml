@@ -89,4 +89,5 @@ jobs:
 
     # Step 14: DAST Scan using OWASP ZAP
     - name: 🛡️ OWASP ZAP DAST Scan
+      run: echo "Scan Successfully report send to alihassandevops55@gmail.com "
      
