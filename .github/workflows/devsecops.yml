@@ -37,7 +37,9 @@ jobs:
     # Step 5: SAST using Semgrep
     - name: Run Semgrep (SAST)
       uses: returntocorp/semgrep-action@v1
-
+      with:
+        config: "p/ci"  # Use default public CI config
+    
     # Step 6: SCA using pip-audit
     - name: Run pip-audit (SCA)
       run: pip-audit
