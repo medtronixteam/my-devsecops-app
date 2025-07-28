@@ -81,8 +81,8 @@ jobs:
         script: |
          cd /home/contact/my-devsecops-app
          git pull origin main
-         docker build -t devsecops-app .
-         docker run -d --name devsecops-app -p 5002:8080 my-secure-app
+         sudo docker build -t devsecops-app .
+         sudo docker run -d --name devsecops-app -p 5002:8080 my-secure-app
 
 
     # Step 14: DAST Scan using OWASP ZAP
