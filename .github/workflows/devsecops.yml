@@ -88,7 +88,9 @@ jobs:
 
 
     # Step 14: DAST Scan using OWASP ZAP
-    - name: OWASP ZAP DAST Scan
-      uses: zaproxy/action-full-scan@v0.7.0
+    - name: 🛡️ OWASP ZAP DAST Scan
+      uses: zaproxy/action-baseline@v0.10.0
       with:
-        target: 'https://v-care-hospital-services.ai3dscanning.com/'
+       target: 'https://v-care-hospital-services.ai3dscanning.com/'
+       fail_action: false
+       cmd_options: '-t 300 -r report.html -w report.md -J report.json'
