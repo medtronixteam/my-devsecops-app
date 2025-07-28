@@ -58,32 +58,31 @@ jobs:
       with:
         image-ref: my-secure-app
 
-    # Step 10: Authenticate with Google Cloud
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v1
+        # Step 10: Login to AWS using credentials
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
-    # Step 11: Set up gcloud SDK
-    - name: Set up gcloud
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-    # Step 12: Push image to GCP Artifact Registry (or DockerHub)
-    - name: Push Image to GCR
+    # Step 11: Push Docker Image to Amazon ECR (Optional)
+    - name: Login to Amazon ECR
       run: |
-        docker tag my-secure-app gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-secure-app
-        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-secure-app
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-    # Step 13: Deploy to GCP Cloud Run
-    - name: Deploy to Cloud Run
+    - name: Push Image to ECR
       run: |
-        gcloud run deploy my-secure-app \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-secure-app \
-          --region ${{ secrets.GCP_REGION }} \
-          --platform managed \
-          --allow-unauthenticated
+        docker tag my-secure-app ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-secure-app
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-secure-app
+
+    # Step 12: Provision EC2 and Deploy using Terraform
+    - name: Terraform Init & Apply
+      run: |
+        cd infrastructure
+        terraform init
+        terraform apply -auto-approve
+
 
     # Step 14: DAST Scan using OWASP ZAP
     - name: OWASP ZAP DAST Scan
