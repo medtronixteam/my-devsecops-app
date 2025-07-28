@@ -18,7 +18,7 @@ jobs:
     - name: Run GitGuardian Secrets Scan
       run: |
         pip install ggshield
-        ggshield secret scan path . --recursive --verbose --yes
+        ggshield secret scan repo .
       env:
         GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
