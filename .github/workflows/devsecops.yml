@@ -47,11 +47,9 @@ jobs:
       uses: bridgecrewio/checkov-action@master
       with:
         directory: .
-      continue-on-error: true
-
-    # Always show this success message regardless of Checkov result
-    - name: ✅ IaC scan completed - Continue pipeline
-      run: echo "✅ Checkov scan completed. Review results above. Pipeline will continue."
+      continue-on-error: true  # Never fail the pipeline
+      id: checkov
+      
     # Step 8: Docker build
     - name: Build Docker Image
       run: docker build -t my-secure-app .
