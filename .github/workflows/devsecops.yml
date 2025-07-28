@@ -79,7 +79,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
-         cd ~/your-repo-folder
+         cd /home/contact/my-devsecops-app
          git pull origin main
          docker build -t devsecops-app .
          docker run -d --name devsecops-app -p 5002:8080 my-secure-app
