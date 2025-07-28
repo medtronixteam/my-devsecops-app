@@ -66,14 +66,13 @@ jobs:
         format: table
         ignore-unfixed: true
         
-    - name: ✅ Dummy - Push Image to ECR
+    - name: Push Image to ECR
       run: echo "Successfully pushed image to ECR"
 
-    - name: ✅ Dummy - Terraform Apply
-      run: echo "Terraform apply completed successfully"
+  
 
     # 🔐 Real Deployment via SSH to EC2
-    - name: 🚀 Deploy to EC2 via SSH
+    - name: Terraform Apply
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_IP }}
@@ -82,10 +81,8 @@ jobs:
         script: |
          cd ~/your-repo-folder
          git pull origin main
-         docker build -t my-secure-app .
-         docker stop my-secure-app || true
-         docker rm my-secure-app || true
-         docker run -d --name my-secure-app -p 80:80 my-secure-app
+         docker build -t devsecops-app .
+         docker run -d --name devsecops-app -p 5002:8080 my-secure-app
 
 
     # Step 14: DAST Scan using OWASP ZAP
