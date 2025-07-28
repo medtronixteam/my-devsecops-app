@@ -1,0 +1,7 @@
+# .gitguardian.yml
+version: 2
+ignore_known_secrets: true
+
+ignored_paths:
+  - .git/config
+  - .github/
